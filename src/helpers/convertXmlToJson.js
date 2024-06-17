@@ -9,6 +9,8 @@ const convertXmlToJson = async (xmlFile, jsonFile) => {
     const result = await parser.parseStringPromise(data);
 
     await fsp.writeFile(jsonFile, JSON.stringify(result, null, 4));
+    await fsp.unlink(xmlFile);
+
     console.log("Converted XML to JSON successfully");
   } catch (err) {
     console.error("Error converting XML to JSON:", err);

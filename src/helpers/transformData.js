@@ -43,7 +43,6 @@ const uploadImage = async (imageUrl) => {
     );
 
     await fsp.unlink(tempFilePath);
-
     return uploadResponse.data[0];
   } catch (e) {
     console.log(`Error with uploading image: ${imageUrl}`);
@@ -69,7 +68,7 @@ const transformData = async (inputFile, outputFile) => {
         attachment_url = item["wp:attachment_url"][0];
         continue;
       }
-      
+
       const uploadedImage = await uploadImage(attachment_url);
 
       transformedData.push({
@@ -85,6 +84,7 @@ const transformData = async (inputFile, outputFile) => {
 
     const dataJSON = JSON.stringify(transformedData, null, 4);
     await fsp.writeFile(outputFile, dataJSON);
+    await fsp.unlink(inputFile);
   } catch (err) {
     console.error("Error transforming JSON file:", err);
   }

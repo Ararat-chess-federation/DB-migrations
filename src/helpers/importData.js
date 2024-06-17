@@ -24,6 +24,7 @@ const importData = async (jsonFile) => {
         );
       }
     }
+    await fsp.unlink(jsonFile);
   } catch (err) {
     console.error("Error reading JSON file:", err);
   }
