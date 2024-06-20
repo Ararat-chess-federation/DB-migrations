@@ -1,5 +1,5 @@
 module.exports = {
-  wpXmlPath: "./assets/WordPress.2024-06-16.xml",
+  wpXmlPath: `./assets/${process.env.WP_XML_FILE}`,
   wpJsonPath: "./assets/wordpress_export.json",
   strapiJsonPath: "./assets/strapi_import.json",
 };
