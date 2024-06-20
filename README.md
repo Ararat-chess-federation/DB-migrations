@@ -19,7 +19,7 @@ The file name must match the value of the `WP_XML_FILE` variable in **.env**.
 
 Next, type the command `npm start`, the program will migrate all data to the new site and delete unnecessary files from this application.
 
-**IMPORTANT**
+## IMPORTANT
 
 This application is structured for the site [http://ararat.chessnews.am](http://ararat.chessnews.am/). Without editing it will not work for your site.
 
