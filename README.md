@@ -1,6 +1,6 @@
 # DB migration
 
-DB migration from Ararat Region Chess Federation [old website](http://old.ararat.chessnews.am/) to [new website](http://ararat.chessnews.am/)
+DB migration from Ararat Region Chess Federation [old website](https://old.ararat.chessnews.am/) to [new website](https://ararat.chessnews.am/)
 
 ## Stack
 - NodeJS
@@ -21,6 +21,6 @@ Next, type the command `npm start`, the program will migrate all data to the new
 
 ## IMPORTANT
 
-This application is structured for the site [http://ararat.chessnews.am](http://ararat.chessnews.am/). Without editing it will not work for your site.
+This application is structured for the site [https://ararat.chessnews.am](http://ararat.chessnews.am/). Without editing it will not work for your site.
 
 To customize it for your site, you need to edit the `getTransformedData` function in the `src/helpers/transformData.js` file, writing the fields you need.
