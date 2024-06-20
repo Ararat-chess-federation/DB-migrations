@@ -49,6 +49,35 @@ const uploadImage = async (imageUrl) => {
   }
 };
 
+const getTransformedData = async (wpData) => {
+  let transformedData = [];
+  let attachment_url = "";
+
+  for (const item of wpData) {
+    const content = item["content:encoded"][0];
+    const { markdown, fbPost } = convertToMarkdown(content);
+
+    if (item["wp:attachment_url"]) {
+      attachment_url = item["wp:attachment_url"][0];
+      continue;
+    }
+
+    const uploadedImage = await uploadImage(attachment_url);
+
+    transformedData.push({
+      title: item.title[0],
+      articleText: [{ __component: "text.paragraph", paragraph: markdown }],
+      publishDate: item["wp:post_date"][0],
+      slug: item["wp:post_name"][0],
+      fbPost: fbPost,
+      url: item["wp:post_name"][0],
+      mainImage: uploadedImage.id,
+    });
+  }
+
+  return transformData;
+};
+
 const transformData = async (inputFile, outputFile) => {
   try {
     const data = await fsp.readFile(inputFile, "utf-8");
@@ -57,30 +86,7 @@ const transformData = async (inputFile, outputFile) => {
     const wpContents = parsedData.rss.channel[0].item;
     const reversed = wpContents.reverse();
 
-    let transformedData = [];
-    let attachment_url = "";
-
-    for (const item of reversed) {
-      const content = item["content:encoded"][0];
-      const { markdown, fbPost } = convertToMarkdown(content);
-
-      if (item["wp:attachment_url"]) {
-        attachment_url = item["wp:attachment_url"][0];
-        continue;
-      }
-
-      const uploadedImage = await uploadImage(attachment_url);
-
-      transformedData.push({
-        title: item.title[0],
-        articleText: [{ __component: "text.paragraph", paragraph: markdown }],
-        publishDate: item["wp:post_date"][0],
-        slug: item["wp:post_name"][0],
-        fbPost: fbPost,
-        url: item["wp:post_name"][0],
-        mainImage: uploadedImage.id,
-      });
-    }
+    const transformedData = getTransformedData(reversed);
 
     const dataJSON = JSON.stringify(transformedData, null, 4);
     await fsp.writeFile(outputFile, dataJSON);
