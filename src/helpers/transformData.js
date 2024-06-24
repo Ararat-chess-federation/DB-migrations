@@ -75,7 +75,7 @@ const getTransformedData = async (wpData) => {
     });
   }
 
-  return transformData;
+  return transformedData;
 };
 
 const transformData = async (inputFile, outputFile) => {
@@ -86,9 +86,9 @@ const transformData = async (inputFile, outputFile) => {
     const wpContents = parsedData.rss.channel[0].item;
     const reversed = wpContents.reverse();
 
-    const transformedData = getTransformedData(reversed);
-
+    const transformedData = await getTransformedData(reversed);
     const dataJSON = JSON.stringify(transformedData, null, 4);
+    
     await fsp.writeFile(outputFile, dataJSON);
     await fsp.unlink(inputFile);
   } catch (err) {
