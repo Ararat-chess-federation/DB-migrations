@@ -71,7 +71,7 @@ const getTransformedData = async (wpData) => {
       slug: item["wp:post_name"][0],
       fbPost: fbPost,
       url: item["wp:post_name"][0],
-      mainImage: uploadedImage.id,
+      mainImage: uploadedImage?.id || null,
     });
   }
 
