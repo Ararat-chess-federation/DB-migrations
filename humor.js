@@ -1,6 +1,7 @@
 require("dotenv").config();
 const axios = require("axios");
 const { wpJsonPath, wpXmlPath } = require("./src/constants/filePaths");
+const transformData = require("./src/helpers/transformData");
 
 const STRAPI_URL = `${process.env.STRAPI_URL}/api/humors`;
 
