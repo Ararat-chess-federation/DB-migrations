@@ -1,33 +1,14 @@
-require("dotenv").config();
-const axios = require("axios");
-const { wpJsonPath, wpXmlPath } = require("./src/constants/filePaths");
+const convertXmlToJson = require("./src/helpers/convertXmlToJson");
 const transformData = require("./src/helpers/transformData");
-
-const STRAPI_URL = `${process.env.STRAPI_URL}/api/humors`;
+const upload = require("./src/helpers/upload");
+const { wpJsonPath, wpXmlPath } = require("./src/constants/filePaths");
 
 async function migrateHumors() {
     await convertXmlToJson(wpXmlPath, wpJsonPath);
-    const items = transformData(wpJsonPath, "interesting");
+    const items = await transformData(wpJsonPath, "interesting");
 
-    for (const { title, humor } of items) {
-        try {
-            const res = await axios.post(STRAPI_URL, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                data: {
-                    title,
-                    humor,
-                },
-            });
-
-            console.log(`✅ Migrated: ${title} (ID: ${res.data.data.id})`);
-        } catch (err) {
-            console.error(
-                `❌ Error migrating ${title}`,
-                err.response?.data || err.message
-            );
-        }
+    for await (const { title, humor } of items) {
+        await upload("/api/humors", { title, humor });
     }
 }
 
