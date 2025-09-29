@@ -1,7 +1,7 @@
 const fsp = require("fs/promises");
-const convertToMarkdown = require("./convertToMarkdown")
+const convertToMarkdown = require("./convertToMarkdown");
 
-const transformData = async (inputFile, key) => {
+const transformData = async (inputFile) => {
     try {
         const data = await fsp.readFile(inputFile, "utf-8");
         const parsedData = JSON.parse(data);
@@ -16,8 +16,8 @@ const transformData = async (inputFile, key) => {
             ).markdown;
 
             res.push({
-                title: title,
-                [key]: content,
+                title,
+                content,
             });
         }
 
@@ -29,4 +29,4 @@ const transformData = async (inputFile, key) => {
     }
 };
 
-module.exports = transformData
+module.exports = transformData;

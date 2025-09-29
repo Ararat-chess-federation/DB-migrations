@@ -5,10 +5,10 @@ const { wpJsonPath, wpXmlPath } = require("./src/constants/filePaths");
 
 async function migrateHumors() {
     await convertXmlToJson(wpXmlPath, wpJsonPath);
-    const items = await transformData(wpJsonPath, "interesting");
+    const items = await transformData(wpJsonPath);
 
-    for await (const { title, humor } of items) {
-        await upload("/api/humors", { title, humor });
+    for await (const { title, content } of items) {
+        await upload("/api/humors", { title, content });
     }
 }
 
