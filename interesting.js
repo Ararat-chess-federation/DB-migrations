@@ -1,4 +1,3 @@
-require("dotenv").config()
 const convertXmlToJson = require("./src/helpers/convertXmlToJson");
 const transformData = require("./src/helpers/transformData");
 const upload = require("./src/helpers/upload");
