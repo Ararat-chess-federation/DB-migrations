@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "DB migration for Ararat Region Chess federation from old site to new site",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
   "keywords": [],
   "author": "Artyom Sukiasyan",
   "license": "ISC",
